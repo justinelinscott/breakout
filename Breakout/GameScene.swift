@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let paddle = SKSpriteNode(imageNamed: "paddle1")
     let ball = SKShapeNode(circleOfRadius: 20 ) // Size of Ball
+    var firstTouch = true
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -62,19 +63,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        paddle.position.x = touchLocation.x
+    
+        if firstTouch {
         let initForce = CGVector(dx: 20.0, dy: 40.0)
         ball.physicsBody?.applyImpulse(initForce)
+            firstTouch = false
+        }
     }
     
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //setup paddle
-        
-        
-        //setup ball
-        
-  //      let touchLocation = touch.location(in: self)
-        
-    }
     
 }
